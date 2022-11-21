@@ -4,6 +4,10 @@ import dash_bootstrap_components as dbc
 import hashlib
 import pathlib
 from functools import lru_cache
+from utils.add_ip import AddIP
+from utils.add_vlan import AddVLAN
+from utils.fiber_port import FiberPort
+from utils.network_port import NetworkPort
 
 
 class BodyComponent:
@@ -21,7 +25,37 @@ class BodyComponent:
     @property
     def layout(self):
         self.load_data()
-        return ()
+        return dbc.Container([
+            dbc.Row([
+                dbc.Col([
+                    html.H1('Datacom', style={'text-align': 'center'}),
+                    html.Hr(),
+                    html.H5('Configurar:'),
+                    dcc.RadioItems([
+                        'Adicionar IP',
+                        "Adicionar VLAN's",
+                        'Porta de fibra',
+                        'Porta de Rede'
+                    ], id=self.id('select_config')),
+                ], width=2),
+                dbc.Col([
+                    dbc.Spinner(html.Div([
+                    ], id=self.id('output_config')))
+                ], width=9)
+            ])
+        ])
 
     def events(self) -> None:
-        pass
+        @callback(
+            Output(self.id('output_config'), 'children'),
+            Input(self.id('select_config'), 'value'),
+        )
+        def altern_configs(value):
+            if value == 'Adicionar IP':
+                return AddIP().layout
+            if value == "Adicionar VLAN's":
+                return AddVLAN().layout
+            if value == 'Porta de fibra':
+                return FiberPort().layout
+            if value == 'Porta de Rede':
+                return NetworkPort().layout
