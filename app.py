@@ -4,7 +4,7 @@ from components.navbar import NavbarComponent
 from components.body import BodyComponent
 
 app = Dash(name=__name__, external_stylesheets=[
-           dbc.themes.FLATLY])
+           dbc.themes.FLATLY], suppress_callback_exceptions=True, prevent_initial_callbacks=True)
 
 app.layout = html.Div([
     NavbarComponent().layout,

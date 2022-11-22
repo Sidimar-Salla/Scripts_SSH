@@ -87,7 +87,7 @@ class AddIP:
             ],
             prevent_initial_call=True
         )
-        def create_list_commands(n_clicks, ip_defaul, final_ip, gateway, netmask):
+        def create_list_commands(n_clicks, ip_default, final_ip, gateway, netmask):
             if n_clicks is None:
                 raise PreventUpdate()
             else:

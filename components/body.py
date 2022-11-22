@@ -8,12 +8,19 @@ from utils.add_ip import AddIP
 from utils.add_vlan import AddVLAN
 from utils.fiber_port import FiberPort
 from utils.network_port import NetworkPort
+from dash.exceptions import PreventUpdate
 
 
 class BodyComponent:
     def __init__(self) -> None:
         self._id = hashlib.md5(
             str(pathlib.Path(__file__).absolute()).encode()).hexdigest()
+        self.register_options = {
+            'ip': AddIP(),
+            'vlan': AddVLAN(),
+            'fiber': FiberPort(),
+            'network': NetworkPort(),
+        }
         self.events()
 
     def id(self, name):
@@ -49,13 +56,15 @@ class BodyComponent:
         @callback(
             Output(self.id('output_config'), 'children'),
             Input(self.id('select_config'), 'value'),
+            prevent_initial_call=True
         )
         def altern_configs(value):
             if value == 'Adicionar IP':
-                return AddIP().layout
+                return self.register_options['ip'].layout
             if value == "Adicionar VLAN's":
-                return AddVLAN().layout
+                return self.register_options['vlan'].layout
             if value == 'Porta de fibra':
-                return FiberPort().layout
+                return self.register_options['fiber'].layout
             if value == 'Porta de Rede':
-                return NetworkPort().layout
+                return self.register_options['network'].layout
+            raise PreventUpdate

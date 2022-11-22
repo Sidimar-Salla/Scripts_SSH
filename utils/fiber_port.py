@@ -35,6 +35,7 @@ class FiberPort:
                     dbc.FormText(
                         "Informe o IP que o equipamento está configurado. Ex.: 192.168.0.1"),
                 ]),
+                html.Hr(),
                 html.Div([
                     dbc.Label("Porta"),
                     dbc.Input(
