@@ -39,11 +39,11 @@ def addlistcommands(command: CommandsProps):
     listCommands = []
 
     listCommands.append("enable")
-    listCommands.append("config")
+    # listCommands.append("config")
 
     if command.ip_config and command.gateway and command.netmask:
         listCommands.append(
-            f""" network parms {command.ip_config} {command.gateway} {command.netmask} """)
+            f""" network parms {command.ip_config} {command.netmask} {command.gateway}""")
 
     if command.mngt_vlan and command.vlan and command.vlan_nomes:
         listCommands.append(f"network mgmt_vlan {command.mngt_vlan}")
@@ -65,7 +65,6 @@ def addlistcommands(command: CommandsProps):
         num_vlan = command.port.split(',')
         vlan_conf = command.vlan_port.split(',')
         vlan_del = command.vlan_exclude.split(',')
-
         for ports in num_vlan:
             listCommands.append(f"interface 1/0/{ports}")
             listCommands.append('switchport mode access')

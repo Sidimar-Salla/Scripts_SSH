@@ -6,6 +6,7 @@ import pathlib
 from functools import lru_cache
 from dash.exceptions import PreventUpdate
 from data.options_commands import addlistcommands, CommandsProps
+from services.connection import ConnectionSSH
 
 
 class AddVLAN:
@@ -54,7 +55,7 @@ class AddVLAN:
                 ], width=6),
                 dbc.Col([
                     html.Div([
-                        dbc.Label("Nome"),
+                        dbc.Label("Nome da Vlan"),
                         dbc.Input(
                             id=self.id('name_vlan'), placeholder="Nome", type="text"),
                         dbc.FormText(
@@ -93,6 +94,12 @@ class AddVLAN:
                         vlan=list_vlan,
                         vlan_nomes=list_name,
                     )
+                )
+                ConnectionSSH.SSHConection(
+                    hostname=ip_default,
+                    username='admin',
+                    password='Swnu*hgt',
+                    listCommands=commands,
                 )
                 print(commands)
                 return dbc.Alert("Parabéns, concluido com erro.", color="success", duration=5000)

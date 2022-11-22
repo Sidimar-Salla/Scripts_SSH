@@ -6,6 +6,7 @@ import pathlib
 from functools import lru_cache
 from dash.exceptions import PreventUpdate
 from data.options_commands import addlistcommands, CommandsProps
+from services.connection import ConnectionSSH
 
 
 class AddIP:
@@ -96,5 +97,10 @@ class AddIP:
                     gateway=gateway,
                     netmask=netmask,
                 ))
-                print(commands)
+                ConnectionSSH.SSHConection(
+                    hostname=ip_default,
+                    username='admin',
+                    password='Swnu*hgt',
+                    listCommands=commands,
+                )
                 return dbc.Alert("Parabéns, concluido com erro.", color="success", duration=5000)
