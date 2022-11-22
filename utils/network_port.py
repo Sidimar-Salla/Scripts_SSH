@@ -27,17 +27,13 @@ class NetworkPort:
             html.Br(),
             dbc.Row([
                 dbc.Col([
-                    dbc.Input(
-                        id="input", placeholder="IP Padrão", type="text"),
+                    dbc.Input(placeholder="IP Padrão", type="text"),
                     html.Br(),
                 ], width=6),
                 dbc.Col([
-                    dbc.Input(
-                        id="input", placeholder="IP Final", type="text"),
+                    dbc.Input(placeholder="IP Final", type="text"),
                 ], width=6),
                 html.Br(),
-                dbc.Alert("Configurado com sucesso!",
-                          color="success", duration=5000),
             ])
         ])
 

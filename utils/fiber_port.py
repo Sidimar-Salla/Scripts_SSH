@@ -1,9 +1,11 @@
 import dash
-from dash import html, Input, Output, dcc, callback
+from dash import html, Input, Output, State, dcc, callback
 import dash_bootstrap_components as dbc
 import hashlib
 import pathlib
 from functools import lru_cache
+from dash.exceptions import PreventUpdate
+from data.options_commands import addlistcommands, CommandsProps
 
 
 class FiberPort:
@@ -26,20 +28,46 @@ class FiberPort:
                 "Porta de fibra", className="ms-1")]),
             html.Br(),
             dbc.Row([
-                dbc.Col([
+                html.Div([
+                    dbc.Label("IP"),
                     dbc.Input(
-                        id="input", placeholder="IP Padrão", type="text"),
-                    html.Br(),
-                ], width=6),
-                dbc.Col([
+                        id=self.id('ip_equipamento'), placeholder="xxx.xxx.xxx.xxx", type="text"),
+                    dbc.FormText(
+                        "Informe o IP que o equipamento está configurado. Ex.: 192.168.0.1"),
+                ]),
+                html.Div([
+                    dbc.Label("Porta"),
                     dbc.Input(
-                        id="input", placeholder="IP Final", type="text"),
-                ], width=6),
-                html.Br(),
-                dbc.Alert("Configurado com sucesso!",
-                          color="success", duration=5000),
+                        id=self.id('port_fibre'), placeholder="Port", type="number"),
+                    dbc.FormText(
+                        "Informe qual porta a fibra foi conectada."),
+                ]),
+                dbc.Button("Configurar", color="primary",
+                           className="me-1", id=self.id('trigger-configure'), n_clicks=0)
+            ]),
+            html.Hr(),
+            dbc.Row([
+                dbc.Spinner(html.Div([], id=self.id('result'))),
             ])
         ])
 
     def events(self) -> None:
-        pass
+        @callback(
+            Output(self.id('result'), 'children'),
+            Input(self.id('trigger-configure'), 'n_clicks'),
+            [
+                State(self.id('port_fibre'), 'value'),
+            ],
+            prevent_initial_call=True
+        )
+        def create_list_commands(n_clicks, port_fibre):
+            if n_clicks is None:
+                raise PreventUpdate()
+            else:
+                commands = addlistcommands(
+                    CommandsProps(
+                        fibre_port=port_fibre,
+                    )
+                )
+                print(commands)
+                return dbc.Alert("Parabéns, concluido com erro.", color="success", duration=5000)
