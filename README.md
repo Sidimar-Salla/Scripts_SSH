@@ -5,10 +5,10 @@ Ele se conecta por ssh no switch e executa os comandos de configuração.
 
 # 📋 Pré-Requisitos
 
-Python 3.10.8
-Dash 2.7.0
-Paramiko 2.12.0
-Pydantic 1.10.2
+- Python 3.10.8
+- Dash 2.7.0
+- Paramiko 2.12.0
+- Pydantic 1.10.2
 
 # 🚀 Instalação
 
