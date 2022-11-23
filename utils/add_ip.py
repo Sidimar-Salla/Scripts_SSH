@@ -69,7 +69,6 @@ class AddIP:
                     dbc.Button(
                         'Configurar', id=self.id('trigger-configure'), n_clicks=0, color="primary", className="me-1")
                     ]),
-
             html.Hr(),
             dbc.Row([
                 dbc.Spinner(html.Div([], id=self.id('result'))),
