@@ -25,12 +25,13 @@ class NavbarComponent:
             dbc.Container([
                 html.A(
                     dbc.Row([
+                        # dbc.Col(
+                        #     html.Img(src='/assets/img/logo_nutrire.png',
+                        #              height='40px')
+                        # ),
                         dbc.Col(
-                            html.Img(src='/assets/img/logo_nutrire.png',
-                                     height='40px')
-                        ),
-                        dbc.Col(
-                            dbc.NavbarBrand("Nutrire", className="ms-2")
+                            dbc.NavbarBrand(
+                                "Configurar Switch", className="ms-2")
                         ),
                     ],
                         align="center",
